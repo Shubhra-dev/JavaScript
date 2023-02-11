@@ -28,6 +28,8 @@ const removeActiveClass = function (player) {
 
 let currentScore = 0;
 let activePlayer = 0;
+let player0Total = 0;
+let player1Total = 0;
 
 btRoll.addEventListener('click', function () {
   const dicePoint = Math.trunc(Math.random() * 6) + 1;
@@ -55,4 +57,23 @@ btRoll.addEventListener('click', function () {
     }
     currentScore = 0;
   }
+});
+
+btHold.addEventListener('click', function () {
+  if (activePlayer === 0) {
+    updateCurrentScore(current0Element, 0);
+    removeActiveClass(player0Active);
+    activePlayer = 1;
+    addActiveClass(player1Active);
+    player0Total += currentScore;
+    score0Element.textContent = player0Total;
+  } else {
+    updateCurrentScore(current1Element, 0);
+    removeActiveClass(player1Active);
+    activePlayer = 0;
+    addActiveClass(player0Active);
+    player1Total += currentScore;
+    score1Element.textContent = player1Total;
+  }
+  currentScore = 0;
 });
