@@ -10,6 +10,10 @@ const restaurant = {
   orderPizza: function (a, b, c) {
     console.log(`pizza with ${a}, ${b} and ${c}`);
   },
+  orderPasta: function (...arr) {
+    console.log(`Pasta with ${arr}`);
+  },
+
 
   openingHours: {
     thu: {
@@ -51,3 +55,30 @@ const extendedRestaurantCopy = {
   dessert: ['doi', 'misti'],
 };
 console.log(extendedRestaurantCopy);
+
+
+//Rest Pattern
+const [a, b, ...others] = [1, 2, 3, 4, 5, 6];
+console.log(a, b, others);
+
+const [aa, , bb, ...others2] = [1, 2, 3, 4, 5, 6]; // never pick skipped element
+console.log(aa, bb, others2);
+
+//spread and rest combined in expression
+const [pizza, pasta, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+
+console.log(pizza, pasta, otherFood);
+// Rest uses in function
+restaurant.orderPasta('Cheese');
+restaurant.orderPasta('Cheese', 'Mushroom');
+restaurant.orderPasta('Cheese', 'mushroom', 'chicken');
+
+// spread and rest combined in function
+restaurant.orderPasta([...restaurant.starterMenu]);
+
+// rest in objects
+const { sat, ...weekday } = restaurant.openingHours;
+console.log(sat, weekday);
