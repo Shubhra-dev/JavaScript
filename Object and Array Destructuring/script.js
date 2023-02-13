@@ -25,7 +25,23 @@ const restaurant = {
     },
   },
 };
+// Destructuring Objects
+const { mainMenu, openingHours, categories } = restaurant;
+console.log(mainMenu, openingHours, categories);
 
+//Chnaging the variable name
+const { mainMenu: mainCr, openingHours: hours, categories: tags } = restaurant;
+console.log(mainCr, hours, tags);
+
+// Nested destructuring
+const {
+  fri: { open, close },
+} = hours;
+console.log(open, close);
+
+// Default values
+const { fri = [], sat = [], sun = [] } = hours;
+console.log(fri, sat, sun);
 // Destructuring Arrays
 const arr = [2, 3, 4];
 const a = arr[0];
