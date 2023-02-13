@@ -9,7 +9,12 @@ const restaurant = {
   order: function (stInd, mInd) {
     return [this.starterMenu[stInd], this.mainMenu[mInd]];
   },
-
+  
+  getOrder: function ({ startIndex, mainIndex = 0, time = 20, address }) {
+    console.log(
+      `You got a order of ${this.starterMenu[startIndex]} & ${this.mainMenu[mainIndex]}, which will deliver at ${address} in ${time}`
+    );
+  },
   openingHours: {
     thu: {
       open: 12,
@@ -42,6 +47,21 @@ console.log(open, close);
 // Default values
 const { fri = [], sat = [], sun = [] } = hours;
 console.log(fri, sat, sun);
+
+//Method caling with destructuring obj
+const obj2 = {
+  mainIndex: 2,
+  time: 22,
+  address: 'Dhaka,Bd',
+  startIndex: 1,
+};
+restaurant.getOrder(obj2);
+
+restaurant.getOrder({
+  address: 'Dhaka,Bd',
+  startIndex: 2,
+});
+
 // Destructuring Arrays
 const arr = [2, 3, 4];
 const a = arr[0];
