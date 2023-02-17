@@ -20,3 +20,15 @@ const transFormer = function (str, fun) {
 //first class function -> functions use as value
 transFormer('JavaScript is the best!!!!!', upperFirstWord);
 transFormer('JavaScript is the best!!!!!', oneWord);
+
+////higher order Functions -> functions returns function
+
+const greeting = function (greet) {
+  return function (name) {
+    console.log(`${greet} ${name}`);
+  };
+};
+
+const greetHi = greeting('Hi');
+greetHi('Adam');
+greeting('Hello')('Mr');
