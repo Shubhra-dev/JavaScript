@@ -32,3 +32,8 @@ const greeting = function (greet) {
 const greetHi = greeting('Hi');
 greetHi('Adam');
 greeting('Hello')('Mr');
+
+// Arrow Function
+const greetArr = greeting => names => console.log(`${greeting} ${names}`);
+greetArr('Hello')('Mrs');
+
