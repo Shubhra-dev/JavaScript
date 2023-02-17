@@ -8,7 +8,7 @@ const upperFirstWord = function (str) {
   return [first.toUpperCase(), ...others].join(' ');
 };
 
-//higher order Functions -> functions taking as a parameter
+// Higher order Functions -> functions taking as a parameter
 const transFormer = function (str, fun) {
   console.log(`Original : ${str}`);
 
@@ -21,7 +21,7 @@ const transFormer = function (str, fun) {
 transFormer('JavaScript is the best!!!!!', upperFirstWord);
 transFormer('JavaScript is the best!!!!!', oneWord);
 
-////higher order Functions -> functions returns function
+// Higher order Functions -> function returning function
 
 const greeting = function (greet) {
   return function (name) {
