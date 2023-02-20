@@ -79,3 +79,10 @@ const displayApp = function (movements) {
 };
 
 displayApp(account1.movements);
+
+const displayBalance = function (movements) {
+  const balance = movements.reduce((acc, cur) => acc + cur, 0);
+  labelBalance.textContent = `${balance} €`;
+};
+
+displayBalance(account1.movements);
