@@ -124,3 +124,23 @@ btnLogin.addEventListener('click', function (e) {
     containerApp.style.opacity = 100;
   }
 });
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const transAmount = Number(inputTransferAmount.value);
+  const transAccount = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  if (
+    transAmount > 0 &&
+    transAccount &&
+    transAmount <= getCurrentBalance(currentAccount) &&
+    transAccount.username !== currentAccount.username
+  ) {
+    currentAccount.movements.push(transAmount * -1);
+    transAccount.movements.push(transAmount);
+    inputTransferTo.value = inputTransferAmount.value = '';
+    inputTransferAmount.blur();
+    updatUI(currentAccount);
+  }
+});
