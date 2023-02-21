@@ -86,3 +86,16 @@ const displayBalance = function (movements) {
 };
 
 displayBalance(account1.movements);
+
+const displaySummary = function (movements) {
+  const deposit = movements
+    .filter(cur => cur > 0)
+    .reduce((acc, cur) => acc + cur, 0);
+  const withdraw = movements
+    .filter(cur => cur < 0)
+    .reduce((acc, cur) => acc + cur, 0);
+
+  labelSumIn.textContent = `${deposit} €`;
+  labelSumOut.textContent = `${Math.abs(withdraw)} €`;
+};
+displaySummary(account1.movements);
