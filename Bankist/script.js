@@ -34,7 +34,17 @@ const account4 = {
 };
 
 const accounts = [account1, account2, account3, account4];
-
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
+console.log(accounts);
 // Elements
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
@@ -78,14 +88,10 @@ const displayApp = function (movements) {
   });
 };
 
-displayApp(account1.movements);
-
 const displayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0);
   labelBalance.textContent = `${balance} €`;
 };
-
-displayBalance(account1.movements);
 
 const displaySummary = function (movements) {
   const deposit = movements
@@ -98,4 +104,23 @@ const displaySummary = function (movements) {
   labelSumIn.textContent = `${deposit} €`;
   labelSumOut.textContent = `${Math.abs(withdraw)} €`;
 };
-displaySummary(account1.movements);
+
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(Number(inputLoginPin.value));
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    labelWelcome.textContent = `Welcome back , ${currentAccount.owner}`;
+    displayApp(currentAccount.movements);
+    displayBalance(currentAccount.movements);
+    displaySummary(currentAccount.movements);
+    inputLoginUsername.value = '';
+    inputLoginPin.value = '';
+    inputLoginPin.blur();
+    containerApp.style.opacity = 100;
+  }
+});
