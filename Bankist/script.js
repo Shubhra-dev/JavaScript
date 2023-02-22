@@ -155,3 +155,20 @@ btnLoan.addEventListener('click', function (e) {
     updatUI(currentAccount);
   }
 });
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const accIndex = accounts.findIndex(
+      acc => acc.pin === Number(inputClosePin.value)
+    );
+    accounts.splice(accIndex, 1);
+    inputCloseUsername.value = inputClosePin.value = '';
+    inputClosePin.blur();
+    containerApp.style.opacity = 0;
+    labelWelcome.textContent = `Log in to get started`;
+  }
+});
