@@ -144,3 +144,14 @@ btnTransfer.addEventListener('click', function (e) {
     updatUI(currentAccount);
   }
 });
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const loanAmount = Number(inputLoanAmount.value);
+  if (loanAmount > 0) {
+    currentAccount.movements.push(loanAmount);
+    inputLoanAmount.value = '';
+    inputLoanAmount.blur();
+    updatUI(currentAccount);
+  }
+});
