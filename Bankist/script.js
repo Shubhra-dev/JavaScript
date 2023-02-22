@@ -172,3 +172,14 @@ btnClose.addEventListener('click', function (e) {
     labelWelcome.textContent = `Log in to get started`;
   }
 });
+
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  const sortTxt = btnSort.textContent;
+  console.log(sortTxt);
+  currentAccount.movements.reverse();
+  updatUI(currentAccount);
+  btnSort.textContent = `${
+    sortTxt === '↓ Ascending' ? '↓ Dscending' : '↓ Ascending'
+  }`;
+});
