@@ -1,4 +1,4 @@
-// 1.
+// Flat FlatMap Reduce
 const bankDepositSum = accounts
   .flatMap(acc => acc.movements)
   .filter(mov => mov > 0)
@@ -6,7 +6,7 @@ const bankDepositSum = accounts
 
 console.log(bankDepositSum);
 
-// 2.
+// Filter
 // const numDeposits1000 = accounts
 //   .flatMap(acc => acc.movements)
 //   .filter(mov => mov >= 1000).length;
@@ -17,7 +17,6 @@ const numDeposits1000 = accounts
 
 console.log(numDeposits1000);
 
-// 3.
 const { deposits, withdrawals } = accounts
   .flatMap(acc => acc.movements)
   .reduce(
@@ -32,7 +31,7 @@ const { deposits, withdrawals } = accounts
 console.log(deposits, withdrawals);
 
 
-// 4.
+// ToUpperCase, ToLowerCase, Join, Split, Includes
 // this is a nice title -> This Is a Nice Title
 const convertTitleCase = function (title) {
   const capitzalize = str => str[0].toUpperCase() + str.slice(1);
