@@ -88,6 +88,20 @@ const displayApp = function (movements) {
   });
 };
 
+const changeTitleDate = function () {
+  const date = new Date();
+  const option = {
+    hour: 'numeric',
+    minute: 'numeric',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    weekday: 'long',
+  };
+  labelDate.textContent = new Intl.DateTimeFormat('bd-BD', option).format(date);
+};
+
+
 const displayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0);
   labelBalance.textContent = `${balance} €`;
