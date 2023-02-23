@@ -101,6 +101,29 @@ const changeTitleDate = function () {
   labelDate.textContent = new Intl.DateTimeFormat('bd-BD', option).format(date);
 };
 
+const getDayCount = function (from, to) {
+  const dateToMs = 24 * 60 * 60 * 1000;
+  return Math.abs(Math.round(from / dateToMs - to / dateToMs));
+};
+
+const getDateText = function (date) {
+  const curDate = new Date();
+  const moveDate = new Date(date);
+  //console.log(curDate);
+  console.log(date);
+  const dayCount = getDayCount(+curDate, +moveDate);
+  if (dayCount === 0) {
+    return 'Today ';
+  } else if (dayCount === 1) {
+    return 'YesterDay ';
+  } else if (dayCount <= 7) {
+    return `${dayCount} days ago `;
+  } else {
+    return `${String(moveDate.getDate()).padStart(2, 0)}/${String(
+      moveDate.getMonth() + 1
+    ).padStart(2, 0)}/${moveDate.getFullYear()} `;
+  }
+};
 
 const displayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0);
