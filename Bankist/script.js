@@ -103,7 +103,11 @@ const changeTitleDate = function () {
     year: 'numeric',
     weekday: 'long',
   };
-  labelDate.textContent = new Intl.DateTimeFormat('bd-BD', option).format(date);
+  const locale = navigator.language;
+  labelDate.textContent = new Intl.DateTimeFormat(
+    currentAccount.locale,
+    option
+  ).format(date);
 };
 const getDayCount = function (from, to) {
   const dateToMs = 24 * 60 * 60 * 1000;
@@ -114,7 +118,7 @@ const getDateText = function (date) {
   const curDate = new Date();
   const moveDate = new Date(date);
   //console.log(curDate);
-  console.log(date);
+  // console.log(date);
   const dayCount = getDayCount(+curDate, +moveDate);
   if (dayCount === 0) {
     return 'Today ';
@@ -134,7 +138,6 @@ const displayApp = function (acc) {
   changeTitleDate();
   acc.movements.forEach(function (mov, i) {
     const dateText = getDateText(acc.movementsDates[i]);
-    console.log(dateText);
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
     <div class="movements__row">
@@ -152,6 +155,23 @@ const displayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0);
   labelBalance.textContent = `${balance.toFixed(2)} €`;
 };
+const setInt = function () {
+  let time = 30;
+
+  const timer = setInterval(function () {
+    let min = Math.floor(time / 60);
+    let sec = time % 60;
+    labelTimer.textContent = `${min}:${sec}`;
+    time--;
+    if (min === 0 && sec === 0) {
+      containerApp.style.opacity = 0;
+      labelWelcome.textContent = `Log in to get started`;
+      clearInterval(timer);
+    }
+  }, 1000);
+
+  return timer;
+};
 
 const displaySummary = function (movements) {
   const deposit = movements
@@ -165,7 +185,7 @@ const displaySummary = function (movements) {
   labelSumOut.textContent = `${Math.abs(withdraw).toFixed(2)} €`;
 };
 
-let currentAccount;
+let currentAccount, timer;
 
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
@@ -175,6 +195,8 @@ btnLogin.addEventListener('click', function (e) {
   // console.log(Number(inputLoginPin.value));
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     labelWelcome.textContent = `Welcome back , ${currentAccount.owner}`;
+    if (timer) clearInterval(timer);
+    timer = setInt();
     displayApp(currentAccount);
     updatUI(currentAccount);
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -202,6 +224,8 @@ btnTransfer.addEventListener('click', function (e) {
     transAccount.movementsDates.push(new Date().toISOString());
     inputTransferTo.value = inputTransferAmount.value = '';
     inputTransferAmount.blur();
+    if (timer) clearInterval(timer);
+    timer = setInt();
     updatUI(currentAccount);
   }
 });
@@ -214,6 +238,8 @@ btnLoan.addEventListener('click', function (e) {
     currentAccount.movementsDates.push(new Date().toISOString());
     inputLoanAmount.value = '';
     inputLoanAmount.blur();
+    if (timer) clearInterval(timer);
+    timer = setInt();
     updatUI(currentAccount);
   }
 });
@@ -246,3 +272,4 @@ btnSort.addEventListener('click', function (e) {
     sortTxt === '↓ Ascending' ? '↓ Dscending' : '↓ Ascending'
   }`;
 });
+
