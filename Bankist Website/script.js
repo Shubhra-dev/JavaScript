@@ -46,3 +46,25 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
+
+
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const clicked = e.target.closest('.operations__tab');
+
+  if (!clicked) return;
+
+  tabs.forEach(el => el.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+
+  const contentNum = clicked.dataset.tab;
+  console.log(contentNum);
+  tabsContent.forEach(t => t.classList.remove('operations__content--active'));
+  document
+    .querySelector(`.operations__content--${contentNum}`)
+    .classList.add('operations__content--active');
+});
