@@ -91,3 +91,23 @@ nav.addEventListener('mouseover', function (e) {
 nav.addEventListener('mouseout', function (e) {
   handleHover(e, 1);
 });
+
+
+const header = document.querySelector('.header');
+const navMargin = nav.getBoundingClientRect().height;
+
+const stickyMenu = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+};
+
+const headerObs = new IntersectionObserver(stickyMenu, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navMargin}px`,
+});
+headerObs.observe(header);
