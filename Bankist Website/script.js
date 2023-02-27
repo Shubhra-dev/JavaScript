@@ -117,6 +117,17 @@ const headerObs = new IntersectionObserver(stickyMenu, {
 headerObs.observe(header);
 
 // Section Reveal on Scroll
+const sections = document.querySelectorAll('.section');
+const scrollEffect = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+  if (entry.isIntersecting) {
+    entry.target.classList.remove('section--hidden');
+    observer.unobserve(entry.target);
+  } else {
+    return;
+  }
+};
 
 const sectionsObs = new IntersectionObserver(scrollEffect, {
   root: null,
