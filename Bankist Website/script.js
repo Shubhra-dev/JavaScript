@@ -33,11 +33,13 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+// Smooth Scroll Button
 btnScroll.addEventListener('click', function (e) {
   //e.preventDefault();
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
+//Smooth Scroll Nav menu
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -47,7 +49,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   }
 });
 
-
+//Tabbed Display
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
@@ -68,6 +70,8 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${contentNum}`)
     .classList.add('operations__content--active');
 });
+
+//Sticky Menu
 
 const nav = document.querySelector('.nav');
 const handleHover = function (e, opacity) {
@@ -111,15 +115,3 @@ const headerObs = new IntersectionObserver(stickyMenu, {
   rootMargin: `-${navMargin}px`,
 });
 headerObs.observe(header);
-
-// Section Reveal on Scroll
-
-const sectionsObs = new IntersectionObserver(scrollEffect, {
-  root: null,
-  threshold: 0.17,
-});
-
-sections.forEach(function (section) {
-  section.classList.add('section--hidden');
-  sectionsObs.observe(section);
-});
