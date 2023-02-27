@@ -111,3 +111,15 @@ const headerObs = new IntersectionObserver(stickyMenu, {
   rootMargin: `-${navMargin}px`,
 });
 headerObs.observe(header);
+
+// Section Reveal on Scroll
+
+const sectionsObs = new IntersectionObserver(scrollEffect, {
+  root: null,
+  threshold: 0.17,
+});
+
+sections.forEach(function (section) {
+  section.classList.add('section--hidden');
+  sectionsObs.observe(section);
+});
