@@ -153,3 +153,31 @@ slides.forEach(function (sl, i) {
   maxSlide++;
 });
 
+const slideSideRight = function () {
+  currSlide++;
+  slides.forEach(function (sld, i) {
+    if (currSlide === maxSlide) {
+      currSlide = 0;
+    }
+    const slideX = i - currSlide;
+    sld.style.transform = `translateX(${slideX * 100}%)`;
+  });
+};
+const slideSideLeft = function () {
+  currSlide--;
+  slides.forEach(function (sl, i) {
+    if (currSlide === -1) {
+      currSlide = maxSlide - 1;
+    }
+    const slideX = i - currSlide;
+    sl.style.transform = `translateX(${slideX * 100}%)`;
+  });
+};
+
+slideBtnRight.addEventListener('click', function () {
+  slideSideRight();
+});
+slideBtnLeft.addEventListener('click', function () {
+  slideSideLeft();
+});
+
