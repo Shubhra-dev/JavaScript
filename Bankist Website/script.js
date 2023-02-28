@@ -180,4 +180,8 @@ slideBtnRight.addEventListener('click', function () {
 slideBtnLeft.addEventListener('click', function () {
   slideSideLeft();
 });
-
+// Slide Change on arrow key pressing
+document.addEventListener('keydown', function (e) {
+  e.key === 'ArrowLeft' && slideSideLeft();
+  e.key === 'ArrowRight' && slideSideRight();
+});
