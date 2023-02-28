@@ -139,3 +139,17 @@ sections.forEach(function (section) {
   sectionsObs.observe(section);
 });
 
+//Slider
+
+const slides = document.querySelectorAll('.slide');
+const slideBtnRight = document.querySelector('.slider__btn--right');
+const slideBtnLeft = document.querySelector('.slider__btn--left');
+let currSlide = 0;
+let maxSlide = 0;
+
+slides.forEach(function (sl, i) {
+  sl.style.transform = `translateX(${i * 100}%)`;
+  sl.style.overflow = 'hidden';
+  maxSlide++;
+});
+
