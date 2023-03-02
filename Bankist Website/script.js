@@ -185,3 +185,12 @@ document.addEventListener('keydown', function (e) {
   e.key === 'ArrowLeft' && slideSideLeft();
   e.key === 'ArrowRight' && slideSideRight();
 });
+
+// Lazy load images
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0.05,
+});
+
+targetImages.forEach(img => imgObserver.observe(img));
