@@ -139,20 +139,28 @@ sections.forEach(function (section) {
   sectionsObs.observe(section);
 });
 
-//Slider
-
+// Slider
 const slides = document.querySelectorAll('.slide');
 const slideBtnRight = document.querySelector('.slider__btn--right');
 const slideBtnLeft = document.querySelector('.slider__btn--left');
+const dotContainer = document.querySelector('.dots');
 let currSlide = 0;
 let maxSlide = 0;
-
+// dot
+const dotBuilder = function () {
+  slides.forEach(function (_, i) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide = "${i}"></button>`
+    );
+  });
+};
+dotBuilder();
 slides.forEach(function (sl, i) {
   sl.style.transform = `translateX(${i * 100}%)`;
   sl.style.overflow = 'hidden';
   maxSlide++;
 });
-
 const slideSideRight = function () {
   currSlide++;
   slides.forEach(function (sld, i) {
@@ -180,13 +188,13 @@ slideBtnRight.addEventListener('click', function () {
 slideBtnLeft.addEventListener('click', function () {
   slideSideLeft();
 });
-// Slide Change on arrow key pressing
+
 document.addEventListener('keydown', function (e) {
   e.key === 'ArrowLeft' && slideSideLeft();
   e.key === 'ArrowRight' && slideSideRight();
 });
 
-// Lazy load images
+//Lazy load images
 
 const targetImages = document.querySelectorAll('img[data-src]');
 
