@@ -138,12 +138,23 @@ sections.forEach(function (section) {
 });
 
 //Slider
-
 const slides = document.querySelectorAll('.slide');
 const slideBtnRight = document.querySelector('.slider__btn--right');
 const slideBtnLeft = document.querySelector('.slider__btn--left');
+const dotContainer = document.querySelector('.dots');
 let currSlide = 0;
 let maxSlide = 0;
+// dot
+const dotBuilder = function () {
+  slides.forEach(function (_, i) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide = "${i}"></button>`
+    );
+  });
+};
+dotBuilder();
+
 
 slides.forEach(function (sl, i) {
   sl.style.transform = `translateX(${i * 100}%)`;
