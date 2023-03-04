@@ -1,4 +1,6 @@
 'use strict';
+
+///////////////////////////////////////
 // Modal window
 
 const modal = document.querySelector('.modal');
@@ -138,6 +140,7 @@ sections.forEach(function (section) {
 });
 
 //Slider
+
 const slides = document.querySelectorAll('.slide');
 const slideBtnRight = document.querySelector('.slider__btn--right');
 const slideBtnLeft = document.querySelector('.slider__btn--left');
@@ -154,17 +157,21 @@ const dotBuilder = function () {
   });
 };
 dotBuilder();
-<<<<<<< HEAD
-=======
-
->>>>>>> 6379c013d86cb57dfbd85aa9fc4375ee4997bab3
-
+const inactiveDot = function () {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(el => el.classList.remove('dots__dot--active'));
+};
+const activeDot = function (i) {
+  document
+    .querySelector(`.dots__dot[data-slide ="${i - 1}"]`)
+    .classList.add('dots__dot--active');
+};
 slides.forEach(function (sl, i) {
   sl.style.transform = `translateX(${i * 100}%)`;
   sl.style.overflow = 'hidden';
   maxSlide++;
 });
-
 const slideSideRight = function () {
   currSlide++;
   slides.forEach(function (sld, i) {
@@ -174,6 +181,9 @@ const slideSideRight = function () {
     const slideX = i - currSlide;
     sld.style.transform = `translateX(${slideX * 100}%)`;
   });
+  console.log(currSlide);
+  inactiveDot();
+  activeDot(currSlide);
 };
 const slideSideLeft = function () {
   currSlide--;
@@ -183,6 +193,9 @@ const slideSideLeft = function () {
     }
     const slideX = i - currSlide;
     sl.style.transform = `translateX(${slideX * 100}%)`;
+    console.log(currSlide);
+    inactiveDot();
+    activeDot(currSlide);
   });
 };
 
@@ -192,13 +205,13 @@ slideBtnRight.addEventListener('click', function () {
 slideBtnLeft.addEventListener('click', function () {
   slideSideLeft();
 });
-// Slide Change on arrow key pressing
+
 document.addEventListener('keydown', function (e) {
   e.key === 'ArrowLeft' && slideSideLeft();
   e.key === 'ArrowRight' && slideSideRight();
 });
 
-// Lazy load images
+//Lazy load images
 
 const targetImages = document.querySelectorAll('img[data-src]');
 
