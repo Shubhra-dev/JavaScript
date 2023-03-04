@@ -1,6 +1,4 @@
 'use strict';
-
-///////////////////////////////////////
 // Modal window
 
 const modal = document.querySelector('.modal');
@@ -140,7 +138,6 @@ sections.forEach(function (section) {
 });
 
 //Slider
-
 const slides = document.querySelectorAll('.slide');
 const slideBtnRight = document.querySelector('.slider__btn--right');
 const slideBtnLeft = document.querySelector('.slider__btn--left');
@@ -157,6 +154,10 @@ const dotBuilder = function () {
   });
 };
 dotBuilder();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6379c013d86cb57dfbd85aa9fc4375ee4997bab3
 
 slides.forEach(function (sl, i) {
   sl.style.transform = `translateX(${i * 100}%)`;
