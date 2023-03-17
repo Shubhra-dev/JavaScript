@@ -1,5 +1,5 @@
 //contact form js
-use strict
+use 'strict';
 const form = document.getElementById('contact-form');
 const nameInput = document.getElementById('name');
 const emailInput = document.getElementById('email');
