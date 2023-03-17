@@ -1,4 +1,3 @@
-//contact form js
 use 'strict';
 const form = document.getElementById('contact-form');
 const nameInput = document.getElementById('name');
