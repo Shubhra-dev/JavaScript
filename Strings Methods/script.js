@@ -22,7 +22,7 @@ const capitalizeName = function (name) {
 capitalizeName('jessica ann smith davis');
 capitalizeName('jonas schmedtmann');
 
-// Padding
+// Padding of word
 const message = 'Go to gate 23!';
 console.log(message.padStart(20, '+').padEnd(30, '+'));
 console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
