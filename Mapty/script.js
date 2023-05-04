@@ -134,7 +134,7 @@ class App {
       inputElevation.value =
         '';
   }
-  renderMarker(workout, type) {
+ renderMarker(workout, type) {
     L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
