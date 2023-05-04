@@ -112,7 +112,7 @@ class App {
         return alert('Numbers are not valid');
       }
       activity = new Running([lat, lng], distance, duration, cadence);
-      this.renderMarker(activity, type);
+      this._renderMarker(activity, type);
     }
     if (type === 'cycling') {
       const elevation = +inputElevation.value;
@@ -125,7 +125,7 @@ class App {
         return alert('Numbers are not valid');
       }
       activity = new Cycling([lat, lng], distance, duration, elevation);
-      this.renderMarker(activity, type);
+      this._renderMarker(activity, type);
     }
 
     inputDistance.value =
@@ -134,7 +134,9 @@ class App {
       inputElevation.value =
         '';
   }
- renderMarker(workout, type) {
+  _renderMarker(workout, type) {
+    const date = String(workout.date);
+    const activity = type[0].toUpperCase() + type.slice(1);
     L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
@@ -146,8 +148,37 @@ class App {
           className: `${type}-popup`,
         })
       )
-      .setPopupContent(`${type} on ${workout.date}`)
+      .setPopupContent(`${activity} on ${date.slice(4, 10)}`)
       .openPopup();
+  }
+  _renderWorkout(workout, type) {
+    const date = String(workout.date);
+    const activity = type[0].toUpperCase + type.slice(1);
+    const html = `
+    <li class="workout workout--${type}" data-id="${workout.id}">
+      <h2 class="workout__title">${activity} on ${date.slice(4, 10)}</h2>
+      <div class="workout__details">
+        <span class="workout__icon">${type === 'running' ? '🏃‍♂️' : '🚴‍♀️'}</span>
+        <span class="workout__value">${workout.distance}</span>
+        <span class="workout__unit">km</span>
+      </div>
+      <div class="workout__details">
+        <span class="workout__icon">⏱</span>
+        <span class="workout__value">${workout.duration}</span>
+        <span class="workout__unit">min</span>
+      </div>
+    `;
+    //   <div class="workout__details">
+    //     <span class="workout__icon">⚡️</span>
+    //     <span class="workout__value">4.6</span>
+    //     <span class="workout__unit">min/km</span>
+    //   </div>
+    //   <div class="workout__details">
+    //     <span class="workout__icon">🦶🏼</span>
+    //     <span class="workout__value">178</span>
+    //     <span class="workout__unit">spm</span>
+    //   </div>
+    // </li>`;
   }
 }
 const app = new App();
