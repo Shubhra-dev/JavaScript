@@ -46,6 +46,7 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const reset = document.querySelector('.reset-button');
 
 class App {
   #map;
@@ -58,6 +59,7 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevation);
     containerWorkouts.addEventListener('click', this._movePopUp.bind(this));
+    reset.addEventListener('click', this.resetMap);
   }
   _getPosition() {
     if (navigator.geolocation) {
@@ -194,7 +196,7 @@ class App {
       html += `
       <div class="workout__details">
       <span class="workout__icon">⚡️</span>
-      <span class="workout__value">${workout.pace}</span>
+      <span class="workout__value">${workout.pace.toFixed(1)}</span>
       <span class="workout__unit">min/km</span>
     </div>
     <div class="workout__details">
@@ -208,7 +210,7 @@ class App {
       html += `
       <div class="workout__details">
             <span class="workout__icon">⚡️</span>
-            <span class="workout__value">${workout.speed}</span>
+            <span class="workout__value">${workout.speed.toFixed(1)}</span>
             <span class="workout__unit">km/h</span>
           </div>
           <div class="workout__details">
@@ -235,6 +237,9 @@ class App {
         duration: 1,
       },
     });
+  }
+  resetMap() {
+    location.reload();
   }
 }
 const app = new App();
