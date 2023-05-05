@@ -57,6 +57,7 @@ class App {
 
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevation);
+    containerWorkouts.addEventListener('click', this._movePopUp.bind(this));
   }
   _getPosition() {
     if (navigator.geolocation) {
@@ -68,10 +69,7 @@ class App {
       );
     }
   }
-  _loadMap(position) {
-    const { latitude } = position.coords;
-    const { longitude } = position.coords;
-    const coord = [latitude, longitude];
+  _viewMap(coord) {
     this.#map = L.map('map').setView(coord, 13);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -80,6 +78,11 @@ class App {
     }).addTo(this.#map);
 
     this.#map.on('click', this._showForm.bind(this));
+  }
+  _loadMap(position) {
+    const { latitude } = position.coords;
+    const { longitude } = position.coords;
+    this._viewMap([latitude, longitude]);
   }
   _showForm(me) {
     form.classList.remove('hidden');
@@ -124,9 +127,6 @@ class App {
         return alert('Numbers are not valid');
       }
       activity = new Running([lat, lng], distance, duration, cadence);
-      this._renderMarker(activity, type);
-      this._renderWorkout(activity, type);
-      this._hideForm();
     }
     if (type === 'cycling') {
       const elevation = +inputElevation.value;
@@ -139,10 +139,17 @@ class App {
         return alert('Numbers are not valid');
       }
       activity = new Cycling([lat, lng], distance, duration, elevation);
-      this._renderMarker(activity, type);
-      this._renderWorkout(activity, type);
-      this._hideForm();
     }
+
+    //push workout on workouts list
+    this.#workout.push(activity);
+    //display marker
+    this._renderMarker(activity, type);
+    //render new workout
+    this._renderWorkout(activity, type);
+    //hide the form
+    this._hideForm();
+    //save to local storage
   }
   _renderMarker(workout, type) {
     const date = String(workout.date);
@@ -213,6 +220,21 @@ class App {
     }
 
     form.insertAdjacentHTML('afterend', html);
+  }
+  _movePopUp(e) {
+    const workoutEl = e.target.closest('.workout');
+
+    if (!workoutEl) return;
+
+    const workoutItem = this.#workout.find(
+      work => work.id === +workoutEl.dataset.id
+    );
+    this.#map.setView(workoutItem.coords, 13, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
   }
 }
 const app = new App();
