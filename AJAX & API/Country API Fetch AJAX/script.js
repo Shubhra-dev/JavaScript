@@ -1,7 +1,9 @@
 'use strict';
+// https://restcountries.com/v2/
 
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
+const imageContainer = document.querySelector('.images');
 
 ///////////////////////////////////////
 const showCountries = function (data, className) {
@@ -26,11 +28,69 @@ const showCountries = function (data, className) {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 };
+// const getCountriesData = function (country) {
+//   const req = new XMLHttpRequest();
+//   req.open('GET', `https://restcountries.com/v3.1/name/${country}`);
+//   req.send();
+//   req.addEventListener('load', function () {
+//     const [data] = JSON.parse(this.responseText);
+//     showCountries(data);
+//     const neighbourReq = new XMLHttpRequest();
+//     const [ngh] = data.borders;
+//     neighbourReq.open('GET', `https://restcountries.com/v3.1/alpha/${ngh}`);
+//     neighbourReq.send();
+//     neighbourReq.addEventListener('load', function () {
+//       const [data2] = JSON.parse(this.responseText);
+//       console.log(data2);
+//       showCountries(data2, 'neighbour');
+//     });
+//   });
+// };
 
 const getCountriesData = function (country) {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
     .then(response => response.json())
-    .then(data => showCountries(data[0]));
+    .then(data => {
+      showCountries(data[0]);
+      const ngh = data[0].borders?.[0];
+      console.log(!ngh);
+      if (!ngh) return;
+
+      return fetch(`https://restcountries.com/v3.1/alpha/${ngh}`);
+    })
+    .then(response => response.json())
+    .then(data => showCountries(data[0], 'neighbour'));
 };
 
-getCountriesData('brazil');
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+
+      return fetch(
+        `https://geocode.xyz/${lat},${lng}?geoit=json&auth=731171521189182594770x58205`
+      );
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Problem With geocode');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data.country);
+      getCountriesData(data.country);
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
+};
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+//whereAmI(-33.933, 18.474);
+//whereAmI(52.508, 13.381);
+whereAmI();
