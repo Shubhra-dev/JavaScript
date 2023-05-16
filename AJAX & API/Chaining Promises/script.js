@@ -21,3 +21,21 @@ const createImage = function (imgPath) {
       reject(new Error('Image not found!'));
     });
   });
+let curImg;
+
+createImage('img/img-1.jpg')
+  .then(img => {
+    curImg = img;
+    console.log('Image 1 loaded');
+    return wait(2);
+  })
+  .then(() => {
+    curImg.style.display = 'none';
+    return createImage('img/img-3.jpg');
+  })
+  .then(img => {
+    curImg = img;
+    console.log('Image 2 loaded');
+    return wait(1);
+  })
+  .catch(err => console.log(err));
